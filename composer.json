@@ -4,7 +4,7 @@
   "type": "magento2-module",
   "license": "proprietary",
   "config": {},
-  "version": "1.0.0",
+  "version": "1.0.1",
   "require": {
     "magento/module-cms": "*",
     "aws/aws-sdk-php": "^3.132.4"
