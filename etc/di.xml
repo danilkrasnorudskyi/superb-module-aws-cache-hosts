@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="sync-load-balancer-target-group-ec2-instance-local-ips" xsi:type="object">Superb\AwsHttpCacheHosts\Console\SyncLoadBalancerTargetGroupEc2InstanceLocalIps</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\PageCache\Model\Cache\Server">
+        <plugin name="superb_aws_http_cache_hosts" type="Superb\AwsHttpCacheHosts\Plugin\Model\Cache\Server" sortOrder="990"/>
+    </type>
+</config>

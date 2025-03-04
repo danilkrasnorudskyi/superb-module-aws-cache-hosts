@@ -1,0 +1,20 @@
+{
+  "name": "superb-code/module-aws-cache-hosts",
+  "description": "AWS target group cache hosts sync",
+  "type": "magento2-module",
+  "license": "proprietary",
+  "config": {},
+  "version": "1.0.0",
+  "require": {
+    "magento/module-cms": "*",
+    "aws/aws-sdk-php": "^3.132.4"
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Superb\\AwsHttpCacheHosts\\": ""
+    }
+  }
+}
