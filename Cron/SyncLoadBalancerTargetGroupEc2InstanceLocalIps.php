@@ -53,12 +53,6 @@ class SyncLoadBalancerTargetGroupEc2InstanceLocalIps
         }
 
         $this->flag->saveAdditionalIps($newIps);
-
-        $this->logger->info(json_encode([
-            'class' => __CLASS__,
-            'message' => 'IPs changed',
-            'ips' => $newIps,
-        ]));
     }
 
     private function getEc2InstanceIds($key, $secret, $region, $targetGroupArn)
@@ -78,7 +72,10 @@ class SyncLoadBalancerTargetGroupEc2InstanceLocalIps
         $ec2InstanceIds = [];
         if (is_array($result->get('TargetHealthDescriptions'))) {
             foreach ($result->get('TargetHealthDescriptions') as $target) {
-                if (!empty($target['Target']['Id'])) {
+                if (!empty($target['Target']['Id']) &&
+                    !empty($target['TargetHealth']['State']) &&
+                    strtolower($target['TargetHealth']['State']) === 'healthy'
+                ) {
                     $ec2InstanceIds[] = $target['Target']['Id'];
                 }
             }
@@ -108,7 +105,7 @@ class SyncLoadBalancerTargetGroupEc2InstanceLocalIps
                     foreach ($reservation['Instances'] as $instance) {
                         if (!empty($instance['PrivateIpAddress']) &&
                             !empty($instance['State']['Name']) &&
-                            $instance['State']['Name'] === 'running'
+                            strtolower($instance['State']['Name']) === 'running'
                         ) {
                             $ips[] = $instance['PrivateIpAddress'];
                         }
